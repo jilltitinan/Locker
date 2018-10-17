@@ -15,5 +15,6 @@ namespace Locker.DatabaseContext
 
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Locker.DatabaseContext;
 using Locker.DatabaseContext.Model;
 using Locker.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Locker.Controllers
 {
@@ -43,5 +44,27 @@ namespace Locker.Controllers
             }
             return NotFound();
         }
+
+
+        /// <summary>
+        /// Get basic information of an employee
+        /// </summary>
+        /// <param name="staffId">An id of the employee</param>
+        /// <returns>
+        ///     Employee - An instance of the employee
+        ///     null - if no id match
+        /// </returns>
+        [Route("Employee")]
+        [HttpGet]
+        public IActionResult GetProfile([FromQuery] string staffId)
+        {
+            var emp = _empRepo.GetProfile(staffId);
+            //var emp = JsonConvert.SerializeObject();
+            if (emp == null)
+                return NotFound();
+            return Content(JsonConvert.SerializeObject(emp), "application/json");
+
+        }
+
     }
 }

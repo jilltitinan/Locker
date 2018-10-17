@@ -50,6 +50,24 @@ namespace Locker.Repositories
             return true;
         }
 
+        /// <summary>
+        ///     Get basic information of the employee
+        /// </summary>
+        /// <param name="staffId">An id of the employee</param>
+        /// <returns>
+        ///     Employee - An instance of the employee
+        ///     null - if no employee found
+        /// </returns>
+        public Employee GetProfile(string staffId)
+        {
+            var emp = _dbContext.Employees.FirstOrDefault(x => x.StaffId == staffId);
+            if (emp == null)
+                return null;
+            if (emp.IsActive == false)
+                return null;
+            return emp;
+        }
+
     }
 
 
