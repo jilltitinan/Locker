@@ -31,12 +31,12 @@ namespace Locker.Repositories
             {
                 return false;
             }
-
             _dbContext.Reservations.Add(reserve);
             _dbContext.SaveChanges();
             return true;
         }
 
+        
         ///// <summary>
         /////     Delete employee in database
         ///// </summary>

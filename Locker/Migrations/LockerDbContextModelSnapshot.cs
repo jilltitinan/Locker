@@ -50,6 +50,22 @@ namespace Locker.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("Locker.DatabaseContext.Model.LockerMetadata", b =>
+                {
+                    b.Property<string>("Mac_address")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Location");
+
+                    b.Property<string>("position");
+
+                    b.HasKey("Mac_address");
+
+                    b.ToTable("LockerMetadatas");
+                });
+
             modelBuilder.Entity("Locker.DatabaseContext.Model.Reservation", b =>
                 {
                     b.Property<int>("Id_reserve")
@@ -60,6 +76,10 @@ namespace Locker.Migrations
                     b.Property<DateTime>("EndDay");
 
                     b.Property<DateTime>("EndTime");
+
+                    b.Property<string>("Id_locker");
+
+                    b.Property<string>("Id_student");
 
                     b.Property<bool>("IsActive");
 
@@ -72,6 +92,25 @@ namespace Locker.Migrations
                     b.HasKey("Id_reserve");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("Locker.DatabaseContext.Model.Vacancy", b =>
+                {
+                    b.Property<string>("Mac_address");
+
+                    b.Property<string>("No_vacancy");
+
+                    b.Property<int>("Id_vacancy");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Size");
+
+                    b.HasKey("Mac_address", "No_vacancy");
+
+                    b.HasAlternateKey("Id_vacancy");
+
+                    b.ToTable("Vacancies");
                 });
 #pragma warning restore 612, 618
         }
