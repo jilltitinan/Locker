@@ -23,7 +23,7 @@ namespace Locker.Repositories
             try
             {
                 if ((_dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == locker.Mac_address))!=null){
-                    return UpdateActive(locker.Mac_address);
+                    return false;
                 }
                 _dbContext.LockerMetadatas.Add(locker);
                 _dbContext.SaveChanges();
@@ -41,6 +41,13 @@ namespace Locker.Repositories
             {
 
                 _dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == Mac_address).IsActive = false;
+                var vacancylocker = from vacantlist in _dbContext.Vacancies
+                                    where vacantlist.Mac_addressRef == Mac_address
+                                    select vacantlist;
+                if (vacancylocker!=null)
+                {
+                    vacancylocker.ToList().ForEach(x => x.IsActive = false);
+                }
                 _dbContext.SaveChanges();
                 return true;
             }
@@ -53,11 +60,23 @@ namespace Locker.Repositories
 
         public bool UpdateActive(string Mac_address)//consider no_vacant and mac_address to set active
         {
-            try { 
-            
-                _dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == Mac_address).IsActive = true;
-                _dbContext.SaveChanges();
-                return true;
+            try {
+
+                var listLocker = from lockers in _dbContext.LockerMetadatas
+                                 where lockers.Mac_address == Mac_address 
+                                 select lockers;
+                if (listLocker != null)
+                {
+                    _dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == Mac_address).IsActive = true;
+                    _dbContext.SaveChanges();
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+               
             }
             catch (Exception)
             {

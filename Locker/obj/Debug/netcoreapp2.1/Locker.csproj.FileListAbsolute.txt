@@ -62,3 +62,4 @@ D:\Project\Locker\Locker\obj\Debug\netcoreapp2.1\Locker.Views.pdb
 D:\Project\Locker\Locker\obj\Debug\netcoreapp2.1\Locker.dll
 D:\Project\Locker\Locker\obj\Debug\netcoreapp2.1\Locker.pdb
 D:\Project\Locker\Locker\obj\Debug\netcoreapp2.1\Locker.csproj.CopyComplete
+D:\Project\Locker\Locker\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs

@@ -15,7 +15,7 @@ namespace Locker.DatabaseContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Vacancy>().HasKey(table => new {
-                table.Mac_address,
+                table.Mac_addressRef,
                 table.No_vacancy
             });
         }

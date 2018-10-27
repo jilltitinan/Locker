@@ -37,7 +37,6 @@ namespace Locker.Migrations
                 {
                     Mac_address = table.Column<string>(nullable: false),
                     Location = table.Column<string>(nullable: true),
-                    position = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -74,11 +73,11 @@ namespace Locker.Migrations
                     No_vacancy = table.Column<string>(nullable: false),
                     Size = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Mac_address = table.Column<string>(nullable: false)
+                    Mac_addressRef = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vacancies", x => new { x.Mac_address, x.No_vacancy });
+                    table.PrimaryKey("PK_Vacancies", x => new { x.Mac_addressRef, x.No_vacancy });
                     table.UniqueConstraint("AK_Vacancies_Id_vacancy", x => x.Id_vacancy);
                 });
         }

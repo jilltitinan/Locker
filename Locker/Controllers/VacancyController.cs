@@ -22,7 +22,7 @@ namespace Locker.Controllers
             _vacancyRepo = new VacancyRepository(_dbContext);
         }
 
-        [Route("Vacant")]
+        [Route("AddVacant")]
         [HttpPost]
         public IActionResult AddVacancy([FromBody] Vacancy vacant)
         {
@@ -33,7 +33,7 @@ namespace Locker.Controllers
             return NotFound();
         }
 
-        [Route("Vacant")]
+        [Route("DeleteVacant")]
         [HttpDelete]
         public IActionResult DeleteVacancy([FromQuery] string No_vacant, string Mac_address)
         {
@@ -43,6 +43,28 @@ namespace Locker.Controllers
             }
             return NotFound();
 
+        }
+
+        [Route("UpadateActiveVacant")]
+        [HttpPut]
+        public IActionResult UpdateActive([FromQuery] string No_vacant,string Mac_address )
+        {
+            if (_vacancyRepo.UpdateActive(No_vacant,Mac_address))
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        [Route("UpdateSizeVacant")]
+        [HttpPut]
+        public IActionResult UpdateSize([FromQuery] string No_vacant, string Mac_address, string size)
+        {
+            if (_vacancyRepo.UpdateSize(No_vacant, Mac_address, size))
+            {
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

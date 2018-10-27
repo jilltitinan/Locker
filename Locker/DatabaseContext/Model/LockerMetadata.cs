@@ -11,7 +11,6 @@ namespace Locker.DatabaseContext.Model
         [Key]
         public string Mac_address { get; set; }
         public string Location { get; set; }
-        public string position { get; set; }
         public bool IsActive { get; set; }
     }
 }

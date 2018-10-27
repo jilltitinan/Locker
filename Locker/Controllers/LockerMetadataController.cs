@@ -21,7 +21,7 @@ namespace Locker.Controllers
             _lockerRepo = new LockerMetadataRepository(_dbContext);
         }
 
-        [Route("LockerMetadata")]
+        [Route("AddLocker")]
         [HttpPost]
         public IActionResult AddLocker([FromBody] LockerMetadata locker)
         {
@@ -32,7 +32,7 @@ namespace Locker.Controllers
             return NotFound();
         }
 
-        [Route("LockerMetadata")]
+        [Route("DeleteLocker")]
         [HttpDelete]
         public IActionResult DeleteLocker([FromQuery] string Mac_address)
         {
@@ -42,6 +42,17 @@ namespace Locker.Controllers
             }
             return NotFound();
 
+        }
+
+        [Route("UpdateActiveLocker")]
+        [HttpPut]
+        public IActionResult UpdateLocker ([FromQuery] string Mac_address)
+        {
+            if (_lockerRepo.UpdateActive(Mac_address))
+            {
+                return Ok(Mac_address);
+            }
+            return NotFound();
         }
     }
 }

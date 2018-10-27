@@ -23,13 +23,19 @@ namespace Locker.Repositories
             //                SELECT Mac_address, No_vacancy from Vacancies");
             try
             {
-                var result = from vacantMaclist in _dbContext.Vacancies
-                             join vacantNolist in _dbContext.Vacancies on vacantMaclist.Id_vacancy equals vacantNolist.Id_vacancy
-                             where vacantMaclist.Mac_address == vacant.Mac_address
-                             select vacantNolist;
+                var result = from vacantlist in _dbContext.Vacancies
+                             where vacantlist.Mac_addressRef == vacant.Mac_addressRef 
+                             select vacantlist;
+                var locker = from lockerlist in _dbContext.LockerMetadatas
+                             where lockerlist.Mac_address == vacant.Mac_addressRef && lockerlist.IsActive == true
+                             select lockerlist;
                 if (result.FirstOrDefault(x => x.No_vacancy == vacant.No_vacancy) != null)
                 {
-                    return UpdateActive(vacant.No_vacancy, vacant.Mac_address);
+                    return false;
+                }
+                else if (locker==null)
+                {
+                    return false;
                 }
                 else {
                     _dbContext.Vacancies.Add(vacant);
@@ -39,7 +45,7 @@ namespace Locker.Repositories
             }
             catch(Exception)
             {
-                Console.WriteLine("Have %s\t%s it already",vacant.Mac_address,vacant.No_vacancy);
+                Console.WriteLine("Have %s\t%s it already on AddVacancy()",vacant.Mac_addressRef,vacant.No_vacancy);
                 return false;
             }
         }
@@ -48,18 +54,17 @@ namespace Locker.Repositories
         {
             try
             {
-                var result = from vacantMaclist in _dbContext.Vacancies
-                         join vacantNolist in _dbContext.Vacancies on vacantMaclist.Id_vacancy equals vacantNolist.Id_vacancy
-                         where vacantMaclist.Mac_address == Mac_address
-                         select vacantNolist;
+                var result = from vacantlist in _dbContext.Vacancies
+                         where vacantlist.Mac_addressRef == Mac_address 
+                         select vacantlist;
            
-            _dbContext.Vacancies.FirstOrDefault(x => x.No_vacancy == No_vacant).IsActive = false;
+            result.FirstOrDefault(x => x.No_vacancy == No_vacant).IsActive = false;
             _dbContext.SaveChanges();
             return true;
             }
             catch (Exception)
             {
-                Console.WriteLine("Have %s\t%s it already", Mac_address, No_vacant);
+                Console.WriteLine("Have %s\t%s it already on DeleteVacancy", Mac_address, No_vacant);
                 return false;
             }
         }
@@ -68,20 +73,42 @@ namespace Locker.Repositories
         {
             try
             {
-                var result = from vacantMaclist in _dbContext.Vacancies
-                             join vacantNolist in _dbContext.Vacancies on vacantMaclist.Id_vacancy equals vacantNolist.Id_vacancy
-                             where vacantMaclist.Mac_address == Mac_address
-                             select vacantNolist;
-
-                _dbContext.Vacancies.FirstOrDefault(x => x.No_vacancy == No_vacant).IsActive = true;
+                var result = from vacantlist in _dbContext.Vacancies
+                             where vacantlist.Mac_addressRef == Mac_address
+                             select vacantlist;
+               
+                 result.FirstOrDefault(x => x.No_vacancy == No_vacant).IsActive = true; 
                 _dbContext.SaveChanges();
                 return true;
             }
             catch (Exception)
             {
-                Console.WriteLine("No have %s\t%s it already", Mac_address, No_vacant);
+                Console.WriteLine("No have %s\t%s it already on UpdateActive()", Mac_address, No_vacant);
                 return false;
             }
         }
+
+        public bool UpdateSize (string No_vacant, string Mac_address, string Size)
+        {
+            try
+            {
+                var result = from vacantlist in _dbContext.Vacancies
+                             where vacantlist.Mac_addressRef == Mac_address && vacantlist.No_vacancy==No_vacant && vacantlist.IsActive == true
+                             select vacantlist;
+                if (result != null){
+                    result.FirstOrDefault(x => x.No_vacancy == No_vacant).Size = Size;
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("No have %s\t%s it already on UpdateSize()", Mac_address, No_vacant);
+                return false;
+            }
+        }
+        
+       
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Locker.Migrations
 {
     [DbContext(typeof(LockerDbContext))]
-    [Migration("25611023053429_db")]
+    [Migration("25611027144607_db")]
     partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,8 +61,6 @@ namespace Locker.Migrations
 
                     b.Property<string>("Location");
 
-                    b.Property<string>("position");
-
                     b.HasKey("Mac_address");
 
                     b.ToTable("LockerMetadatas");
@@ -98,7 +96,7 @@ namespace Locker.Migrations
 
             modelBuilder.Entity("Locker.DatabaseContext.Model.Vacancy", b =>
                 {
-                    b.Property<string>("Mac_address");
+                    b.Property<string>("Mac_addressRef");
 
                     b.Property<string>("No_vacancy");
 
@@ -108,7 +106,7 @@ namespace Locker.Migrations
 
                     b.Property<string>("Size");
 
-                    b.HasKey("Mac_address", "No_vacancy");
+                    b.HasKey("Mac_addressRef", "No_vacancy");
 
                     b.HasAlternateKey("Id_vacancy");
 
