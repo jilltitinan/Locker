@@ -29,11 +29,11 @@ namespace Locker.Repositories
                 var locker = from lockerlist in _dbContext.LockerMetadatas
                              where lockerlist.Mac_address == vacant.Mac_addressRef && lockerlist.IsActive == true
                              select lockerlist;
-                if (result.FirstOrDefault(x => x.No_vacancy == vacant.No_vacancy) != null)
+                if (locker.FirstOrDefault(x=>x.Mac_address == vacant.Mac_addressRef)==null)
                 {
                     return false;
                 }
-                else if (locker==null)
+                else if (result.FirstOrDefault(x => x.No_vacancy == vacant.No_vacancy) != null)
                 {
                     return false;
                 }
@@ -69,46 +69,67 @@ namespace Locker.Repositories
             }
         }
 
-        public bool UpdateActive (string No_vacant,string Mac_address)//consider no_vacant and mac_address to set active
+        public bool UpdateActive(string No_vacant, string Mac_address)//consider no_vacant and mac_address to set active
         {
             try
             {
-                var result = from vacantlist in _dbContext.Vacancies
-                             where vacantlist.Mac_addressRef == Mac_address
-                             select vacantlist;
-               
-                 result.FirstOrDefault(x => x.No_vacancy == No_vacant).IsActive = true; 
+                /* var result = from vacantlist in _dbContext.Vacancies
+                              where vacantlist.Mac_addressRef == Mac_address
+                              select vacantlist;*/
+
+                var result = from vacanlist in _dbContext.Vacancies
+                             join lockerlist in _dbContext.LockerMetadatas on vacanlist.Mac_addressRef equals lockerlist.Mac_address
+                             where lockerlist.IsActive == true && vacanlist.Mac_addressRef == Mac_address
+                             select vacanlist;
+                if (result != null)
+                {
+                    result.FirstOrDefault(x => x.No_vacancy == No_vacant).IsActive = true;
+                }
+
                 _dbContext.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("No have %s\t%s it already on UpdateActive()", Mac_address, No_vacant);
+                //Console.WriteLine("No have %s\t%s it already on UpdateActive()", Mac_address, No_vacant);
                 return false;
             }
         }
 
-        public bool UpdateSize (string No_vacant, string Mac_address, string Size)
+        public bool UpdateSize(string No_vacant, string Mac_address, string Size)
         {
             try
             {
                 var result = from vacantlist in _dbContext.Vacancies
-                             where vacantlist.Mac_addressRef == Mac_address && vacantlist.No_vacancy==No_vacant && vacantlist.IsActive == true
+                             where vacantlist.Mac_addressRef == Mac_address && vacantlist.No_vacancy == No_vacant && vacantlist.IsActive == true
                              select vacantlist;
-                if (result != null){
+                if (result != null)
+                {
                     result.FirstOrDefault(x => x.No_vacancy == No_vacant).Size = Size;
                     _dbContext.SaveChanges();
                     return true;
                 }
                 return false;
             }
-            catch(Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("No have %s\t%s it already on UpdateSize()", Mac_address, No_vacant);
+                // Console.WriteLine("No have %s\t%s it already on UpdateSize()", Mac_address, No_vacant);
                 return false;
             }
         }
-        
-       
+        public List<Vacancy> GetVacancy()
+        {
+            return _dbContext.Vacancies.ToList();
+        }
+
+        public List<Vacancy> GetVacancy(int id)
+        {
+
+            return _dbContext.Vacancies.Where(x => x.Id_vacancy == id).ToList();
+        }
+
     }
 }
+        
+       
+

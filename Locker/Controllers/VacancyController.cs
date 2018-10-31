@@ -66,5 +66,21 @@ namespace Locker.Controllers
             }
             return NotFound();
         }
+
+        [Route("VacancyAll")]
+        [HttpGet]
+        public IActionResult GetVacancy()
+        {
+            var list = _vacancyRepo.GetVacancy();
+            return Ok(list);
+        }
+
+        [Route("VacancyId")]
+        [HttpGet]
+        public IActionResult GetHistory(int id)
+        {
+            var list = _vacancyRepo.GetVacancy(id);
+            return Ok(list);
+        }
     }
 }

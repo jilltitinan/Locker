@@ -54,5 +54,21 @@ namespace Locker.Controllers
             }
             return NotFound();
         }
+
+        [Route("LockerAll")]
+        [HttpGet]
+        public IActionResult GetLocker()
+        {
+            var list = _lockerRepo.GetLocker();
+            return Ok(list);
+        }
+
+        [Route("LockerMac")]
+        [HttpGet]
+        public IActionResult GetLocker(string mac_address)
+        {
+            var list = _lockerRepo.GetLocker(mac_address);
+            return Ok(list);
+        }
     }
 }

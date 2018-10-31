@@ -39,17 +39,20 @@ namespace Locker.Repositories
         {
             try
             {
-
-                _dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == Mac_address).IsActive = false;
-                var vacancylocker = from vacantlist in _dbContext.Vacancies
-                                    where vacantlist.Mac_addressRef == Mac_address
-                                    select vacantlist;
-                if (vacancylocker!=null)
+                if (_dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == Mac_address) != null)
                 {
-                    vacancylocker.ToList().ForEach(x => x.IsActive = false);
+                    _dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == Mac_address).IsActive = false;
+                    var vacancylocker = from vacantlist in _dbContext.Vacancies
+                                        where vacantlist.Mac_addressRef == Mac_address
+                                        select vacantlist;
+                    if (vacancylocker != null)
+                    {
+                        vacancylocker.ToList().ForEach(x => x.IsActive = false);
+                    }
+                    _dbContext.SaveChanges();
+                    return true;
                 }
-                _dbContext.SaveChanges();
-                return true;
+                return false;
             }
             catch (Exception)
             {
@@ -62,27 +65,37 @@ namespace Locker.Repositories
         {
             try {
 
-                var listLocker = from lockers in _dbContext.LockerMetadatas
-                                 where lockers.Mac_address == Mac_address 
-                                 select lockers;
-                if (listLocker != null)
+                if (_dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == Mac_address) != null)
                 {
                     _dbContext.LockerMetadatas.FirstOrDefault(x => x.Mac_address == Mac_address).IsActive = true;
+                    var vacancylocker = from vacantlist in _dbContext.Vacancies
+                                        where vacantlist.Mac_addressRef == Mac_address
+                                        select vacantlist;
+                    if (vacancylocker != null)
+                    {
+                        vacancylocker.ToList().ForEach(x => x.IsActive = true);
+                    }
                     _dbContext.SaveChanges();
                     return true;
+                }
+                return false;
 
-                }
-                else
-                {
-                    return false;
-                }
-               
             }
             catch (Exception)
             {
                 Console.WriteLine("No have %s\t%s it already", Mac_address);
                 return false;
             }
+        }
+        public List<LockerMetadata> GetLocker()
+        {
+            return _dbContext.LockerMetadatas.ToList();
+        }
+
+        public List<LockerMetadata> GetLocker(string mac_address)
+        {
+
+            return _dbContext.LockerMetadatas.Where(x => x.Mac_address == mac_address).ToList();
         }
     }
 }

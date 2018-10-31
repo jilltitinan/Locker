@@ -24,5 +24,8 @@ namespace Locker.DatabaseContext
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
         public DbSet<LockerMetadata> LockerMetadatas { get; set; }  
+        public DbSet<Content> Contents { get; set; }  
+        public DbSet<MessageDetail> MessageDetails { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }

@@ -16,6 +16,40 @@ namespace Locker.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.3-rtm-32065");
 
+            modelBuilder.Entity("Locker.DatabaseContext.Model.Account", b =>
+                {
+                    b.Property<string>("Id_student")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Firstname");
+
+                    b.Property<string>("Lastname");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<int>("Point");
+
+                    b.HasKey("Id_student");
+
+                    b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Locker.DatabaseContext.Model.Content", b =>
+                {
+                    b.Property<int>("Id_content")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("PlainText");
+
+                    b.HasKey("Id_content");
+
+                    b.ToTable("Contents");
+                });
+
             modelBuilder.Entity("Locker.DatabaseContext.Model.Employee", b =>
                 {
                     b.Property<int>("EmployeeNumber")
@@ -62,6 +96,26 @@ namespace Locker.Migrations
                     b.HasKey("Mac_address");
 
                     b.ToTable("LockerMetadatas");
+                });
+
+            modelBuilder.Entity("Locker.DatabaseContext.Model.MessageDetail", b =>
+                {
+                    b.Property<int>("Id_message")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("Id_contentRef");
+
+                    b.Property<string>("Id_studentRef");
+
+                    b.Property<bool>("IsShow");
+
+                    b.Property<DateTime>("Time");
+
+                    b.HasKey("Id_message");
+
+                    b.ToTable("MessageDetails");
                 });
 
             modelBuilder.Entity("Locker.DatabaseContext.Model.Reservation", b =>
