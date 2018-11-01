@@ -26,11 +26,6 @@ namespace Locker.Repositories
         /// </returns>
         public bool AddReservation(Reservation reserve)
         {
-            var tmp = reserve; 
-            if ((_dbContext.Reservations.Where(x => x.Id_locker==tmp.Id_locker) == null))
-            {
-                return false;
-            }
             _dbContext.Reservations.Add(reserve);
             _dbContext.SaveChanges();
             return true;

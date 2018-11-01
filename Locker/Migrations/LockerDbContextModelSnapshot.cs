@@ -31,6 +31,8 @@ namespace Locker.Migrations
 
                     b.Property<int>("Point");
 
+                    b.Property<string>("Role");
+
                     b.HasKey("Id_student");
 
                     b.ToTable("Accounts");

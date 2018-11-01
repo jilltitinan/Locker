@@ -80,5 +80,13 @@ namespace Locker.Repositories
 
             return _dbContext.Accounts.Where(x => x.Id_student == id).ToList();
         }
+
+        public List<Account> GetAccountMember()
+        {
+            var Memberlist = from accountlist in _dbContext.Accounts
+                             where accountlist.Role == "student"
+                             select accountlist;
+            return Memberlist.ToList();
+        }
     }
 }
