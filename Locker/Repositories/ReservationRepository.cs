@@ -11,7 +11,7 @@ namespace Locker.Repositories
     {
         LockerDbContext _dbContext;
 
-        public ReservationRepository(LockerDbContext dbContext)
+        public ReservationRepository(LockerDbContext dbContext) 
         {
             _dbContext = dbContext;
         }
@@ -26,12 +26,70 @@ namespace Locker.Repositories
         /// </returns>
         public bool AddReservation(Reservation reserve)
         {
-            _dbContext.Reservations.Add(reserve);
-            _dbContext.SaveChanges();
-            return true;
+            try
+            {
+                
+                if (CheckId_studentRef(reserve.Id_studentRef))
+                {
+                    return false;
+                }
+                //else if (CheckId_vacancyRef(reserve.Id_vacancyRef))
+                //{
+                //    return false;
+                //}
+                else
+                {
+                    _dbContext.Reservations.Add(reserve);
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("AddReservation Error");
+                return false;
+            }
+            
+            
         }
 
+        public bool CheckId_studentRef(string id)
+        {
+            return _dbContext.Accounts.FirstOrDefault(x => x.Id_student == id) == null;
+        }
         
+        //public bool CheckVacancy (string Mac_address,)
+        //{
+        //    // list from vacancy that have Id_vacancy No_vacancy Size IsActive=true Mac_addressRef=Mac_address
+        //    var reserve_list = from reservelist in _dbContext.Reservations
+        //                       join vacancylist in _dbContext.Vacancies on reservelist.Id_vacancyRef equals vacancylist.Id_vacancy
+        //                       where vacancylist.Mac_addressRef == Mac_address && vacancylist.IsActive == true
+        //                       select reservelist;
+              
+
+        //}
+
+        public bool CheckId_vacancyRef(int id)
+        {
+            return _dbContext.Vacancies.FirstOrDefault(x => x.Id_vacancy == id) == null;
+        }
+
+        public bool CancelReseveration(int id)
+        {
+            try
+            {
+                if (_dbContext.Reservations.FirstOrDefault(x => x.Id_reserve == id) == null)
+                {
+                    _dbContext.Reservations.FirstOrDefault(x => x.Id_reserve == id).IsActive = false;
+                    return true;
+                }
+                return false;
+            }catch (Exception)
+            {
+                Console.WriteLine("Cancel reservation error");
+                return false;
+            }
+        }
         ///// <summary>
         /////     Delete employee in database
         ///// </summary>

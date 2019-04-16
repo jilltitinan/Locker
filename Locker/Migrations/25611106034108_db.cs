@@ -12,8 +12,7 @@ namespace Locker.Migrations
                 columns: table => new
                 {
                     Id_student = table.Column<string>(nullable: false),
-                    Firstname = table.Column<string>(nullable: true),
-                    Lastname = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Role = table.Column<string>(nullable: true),
@@ -98,15 +97,14 @@ namespace Locker.Migrations
                 {
                     Id_reserve = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Id_student = table.Column<string>(nullable: true),
-                    Id_locker = table.Column<string>(nullable: true),
                     Code = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     Status = table.Column<bool>(nullable: false),
                     StartDay = table.Column<DateTime>(nullable: false),
                     EndDay = table.Column<DateTime>(nullable: false),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false)
+                    CountOpen = table.Column<int>(nullable: false),
+                    Id_studentRef = table.Column<string>(nullable: true),
+                    Id_vacancyRef = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

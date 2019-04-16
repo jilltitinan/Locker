@@ -16,11 +16,14 @@ namespace Locker.DatabaseContext.Model
         public bool Status { get; set; }
         public DateTime StartDay { get; set; }
         public DateTime EndDay { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        // reserve by day by day 
+        // maximum for reserve day is 3 days
+       // public DateTime StartTime { get; set; }
+       // public DateTime EndTime { get; set; }
+      //  public int CountOpen { get; set; }
         [ForeignKey("Account")]
         public string Id_studentRef { get; set; }
         [ForeignKey("Vacancy")]
-        public string Id_vacancyRef { get; set; }
+        public int Id_vacancyRef { get; set; }
     }
 }

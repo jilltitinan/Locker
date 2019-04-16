@@ -20,6 +20,7 @@ namespace Locker.Repositories
         {
             try
             {
+                account.Point = 100;
                 _dbContext.Accounts.Add(account);
                 _dbContext.SaveChanges();
                 return true;
@@ -69,6 +70,8 @@ namespace Locker.Repositories
                 return false;
             }
         }
+
+
 
         public List<Account> GetAccount()
         {

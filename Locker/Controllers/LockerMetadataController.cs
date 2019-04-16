@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Locker.Controllers
 {
+    [Route("/api/[Controller]")]
     public class LockerMetadataController : Controller
     {
         private readonly LockerMetadataRepository _lockerRepo;

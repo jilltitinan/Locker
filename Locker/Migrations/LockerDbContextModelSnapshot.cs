@@ -23,9 +23,7 @@ namespace Locker.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("Firstname");
-
-                    b.Property<string>("Lastname");
+                    b.Property<string>("Name");
 
                     b.Property<string>("PhoneNumber");
 
@@ -127,19 +125,17 @@ namespace Locker.Migrations
 
                     b.Property<string>("Code");
 
+                    b.Property<int>("CountOpen");
+
                     b.Property<DateTime>("EndDay");
 
-                    b.Property<DateTime>("EndTime");
+                    b.Property<string>("Id_studentRef");
 
-                    b.Property<string>("Id_locker");
-
-                    b.Property<string>("Id_student");
+                    b.Property<int>("Id_vacancyRef");
 
                     b.Property<bool>("IsActive");
 
                     b.Property<DateTime>("StartDay");
-
-                    b.Property<DateTime>("StartTime");
 
                     b.Property<bool>("Status");
 

@@ -22,7 +22,7 @@ namespace Locker.Controllers
             _reserveRepo = new ReservationRepository(_dbContext);
         }
 
-        [Route("Reserve")]
+        [Route("AddReserve")]
         [HttpPost]
         public IActionResult AddReservation([FromBody] Reservation reserve)
         {
@@ -33,6 +33,16 @@ namespace Locker.Controllers
             return NotFound();
         }
 
+        [Route("CancelReserve")]
+        [HttpDelete]
+        public IActionResult CancelReservation ([FromQuery] int id)
+        {
+            if(_reserveRepo.CancelReseveration(id))
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
        
     }
 }

@@ -8,4 +8,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAwdVekTQBoEuPetkqErscngAAAAACAAAAAAAQZgAAAAEAACAAAAASxfQZCAS0oNPwALvMju77Z63ZVk1LOITWq+Dz11XxfQAAAAAOgAAAAAIAACAAAABko+yAzx7xjEjCMUzQu3WiAMBd9q0lzXkhVz26owgQ4IAAAACvtUQ88P6sWNeQVCFe/0BV82/HFXMLYXP3+IwsIwRh1SawDAzv0SYirIVuG3OaXl6QhmbSKIB84TzoGltueMOUtCePJPzrx3zFwWsyohRiOV0LcDcnE4TCORknNCT4lYg+XYMr+TBVo3J5r6QMwhEk2J7I20IyF08zRB1R+Rr2CkAAAADznQNOKzhiIgaYy0+xfwj6xhmcbD3bPol9XzoLYwi6dsyPfGPaOXt9nWKuEBw3MkyNj5Ni4igLdYINUuJz5iVB</EncryptedPassword>
   </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="Locker.DatabaseContext.LockerDbContext">
+      <Value>
+      </Value>
+    </EFMigrations>
+  </ItemGroup>
 </Project>
